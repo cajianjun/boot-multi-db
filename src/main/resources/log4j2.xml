@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+	<Appenders>
+		<RollingFile name="RollingFile" fileName="logs/patentapp.log"
+			filePattern="logs/patentapp-%d{MM-dd-yyyy}.log.gz">
+			<PatternLayout>
+				<Pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+		
+		<RollingFile name="patentUpdate" fileName="logs/record/patentUpdate.log"
+			filePattern="logs/record/patentUpdate-%d{MM-dd-yyyy}.log.gz">
+			<PatternLayout>
+				<Pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</Pattern>
+			</PatternLayout>
+			<Policies>
+                 <TimeBasedTriggeringPolicy/>
+                 <SizeBasedTriggeringPolicy size="100 MB"/>
+             </Policies>
+		</RollingFile>
+		
+		<RollingFile name="errorRecord" fileName="logs/record/errorRecord.log"
+			filePattern="logs/record/errorRecord-%d{MM-dd-yyyy}.log.gz">
+			<PatternLayout>
+				<Pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</Pattern>
+			</PatternLayout>
+			<Policies>
+                 <TimeBasedTriggeringPolicy/>
+                 <SizeBasedTriggeringPolicy size="500 MB"/>
+             </Policies>
+		</RollingFile>
+
+		<Console name="STDOUT" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+		</Console>
+
+	</Appenders>
+
+	<Loggers>
+		<logger name="patentUpdateLogger" level="info" additivity="false">
+			<AppenderRef ref="patentUpdate" />
+		</logger>
+		<logger name="errorRecordLogger" level="info" additivity="false">
+			<AppenderRef ref="errorRecord" />
+		</logger>
+		<Root level="info">
+			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="STDOUT" />
+		</Root>
+	</Loggers>
+</Configuration>
